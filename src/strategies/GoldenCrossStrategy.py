@@ -1,44 +1,37 @@
-
-import src.strategies.BaseStrategy as BaseStrategy
-
+from src.strategies.BaseStrategy import BaseStrategy
 import backtrader as bt
 
 class GoldenCrossStrategy(BaseStrategy):
 
-    params= (
+    params = (
         ('SMA_short_period', 10),
-        ('SMA_long_period', 30),
+        ('SMA_long_period', 30)
     )
 
     def __init__(self):
-        # Define the short and long moving averages
-        self.sma_short = bt.indicators.SimpleMovingAverage(self.datas[0], period=self.params.SMA_short_period)
-        self.sma_long = bt.indicators.SimpleMovingAverage(self.datas[0], period=self.params.SMA_long_period)
-        self.crossover = bt.indicators.CrossOver(self.sma_short, self.sma_long)
+        super().__init__()
 
-        operations= []
-
-        ## Initialize a dictionary to keep track of orders for each data feed
-        self.orders = {d: None for d in self.datas}
-
-
+        self.crossovers = {}
+        for d in self.datas:
+            sma_s = bt.indicators.SimpleMovingAverage(d.close, period=self.params.SMA_short_period)
+            sma_l = bt.indicators.SimpleMovingAverage(d.close, period=self.params.SMA_long_period)
+            self.crossovers[d] = bt.indicators.CrossOver(sma_s, sma_l)
 
     def next(self):
+        super().next()
+
         for data in self.datas:
 
-            posicion = self.getposition(data).size
+            own = self.position(data)
+            cross = self.crossovers[data][0]
 
-            if self.orders[data]: 
+            if self.orders[data] is not None:
                 continue
 
-        if señal_compra:
-            
-            # Check for crossover signals
-            if not posicion:  # Not in the market
-                if self.crossover > 0:  #buy signal
-                    self.log(f'BUY CREATE, {self.data.close[0]:.2f}')
-                    self.orders[data] = self.buy(data=data)
-            else:  # In the market
-                if self.crossover < 0:  # close signal
-                    self.log(f'CLOSE CREATE, {self.data.close[0]:.2f}')
-                    self.orders[data] = self.close(data=data)
+            if own == 0 and cross > 0:
+                self.log(f"GOLDEN CROSS BUY {data._name}")
+                self.orders[data] = self.buy(data=data)
+
+            elif own > 0 and cross < 0:
+                self.log(f"GOLDEN CROSS SELL {data._name}")
+                self.orders[data] = self.sell(data=data)
