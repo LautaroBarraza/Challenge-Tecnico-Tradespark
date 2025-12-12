@@ -26,7 +26,7 @@ def load_stock_data(ticker: str, start_date: str, end_date: str) -> pd.DataFrame
     # 2. Ensure no empty rows at the beginning
     data = data.dropna()
     
-    data.to_csv(os.path.join(config.DATA_PATH, stock_name))
+    data.to_csv(os.path.join(config.DATA_STOCKS_PATH, stock_name))
     
     if data.empty:
         return None

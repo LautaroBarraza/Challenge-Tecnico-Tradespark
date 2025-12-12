@@ -1,6 +1,10 @@
 INITIAL_CASH=100000
 
 DATA_PATH='data/'
+DATA_STOCKS_PATH='data/stocks/'
+OUTPUT_REPORTS_PATH='outputs/reports/'
+OUTPUT_ANALYSIS_FIGURES_PATH='outputs/analysis/figures/'
+OUTPUT_ANALYSIS_PATH='outputs/analysis/'
 
 
 STRATEGY_TICKERS = ['AAPL', 'MSFT', 'GOOGL', 'TSLA']

@@ -4,8 +4,11 @@ from __future__ import (absolute_import, division, print_function,
 import datetime
 import pandas as pd
 
+
+## utils and config
 import src.config as config
 import src.utils.data_loader as data_loader
+import src.utils.strategies_transaction_resume as strategy_transaction_resume  
 from src.sizers.StrategyPercentSizer import StrategyPercentSizer
 
 ##strategies
@@ -31,7 +34,7 @@ if __name__ == '__main__':
     for ticker in tickers_list:
         data_loader.load_stock_data(ticker, init_date, end_date)
         data = bt.feeds.GenericCSVData(
-            dataname=config.DATA_PATH + f'{ticker}.csv',
+            dataname=config.DATA_STOCKS_PATH + f'{ticker}.csv',
             dtformat='%Y-%m-%d', 
             fromdate=datetime.datetime.strptime(init_date, '%Y-%m-%d'),
             todate=datetime.datetime.strptime(end_date, '%Y-%m-%d'),
@@ -78,18 +81,18 @@ if __name__ == '__main__':
         df_trades.sort_values(by='date', inplace=True)
         
         # Guardar a CSV
-        df_trades.to_csv('transaction_report.csv', index=False)
+        df_trades.to_csv(config.OUTPUT_REPORTS_PATH + 'transaction_report.csv', index=False)
 
 
     # 2. REPORTE DE VALOR DE PORTFOLIO (Variaciones)
     # Tomamos la historia de valores de la primera estrategia (todas comparten el mismo broker)
     portfolio_history = strategies[0].portfolio_values
     df_portfolio = pd.DataFrame(portfolio_history)
-    df_portfolio.to_csv('value_report_portfolio.csv', index=False)
+    df_portfolio.to_csv(config.OUTPUT_REPORTS_PATH + 'value_report_portfolio.csv', index=False)
     
     
     ## strategies resume
-    
+    strategy_transaction_resume.generate_strategy_transaction_resume()
 
 
     cerebro.plot()

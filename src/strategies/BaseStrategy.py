@@ -22,7 +22,7 @@ class BaseStrategy(bt.Strategy):
         try:
             for name, value in self.params._getitems():
                 actual_value = getattr(self.params, name)
-                params_str += f"{name}{actual_value}"
+                params_str += f"{actual_value}"
             self.strat_name += params_str
         except:
             pass
