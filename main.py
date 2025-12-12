@@ -1,6 +1,6 @@
 from __future__ import (absolute_import, division, print_function,
                         unicode_literals)
-
+## standard libraries
 import datetime
 import pandas as pd
 
@@ -15,6 +15,7 @@ from src.sizers.StrategyPercentSizer import StrategyPercentSizer
 from src.strategies.GoldenCrossStrategy import GoldenCrossStrategy
 from src.strategies.SMAStrategy import SMAStrategy
 
+## backtrader imports
 import backtrader as bt
 import backtrader.sizers as btsizers
 
