@@ -2,6 +2,13 @@ from src.strategies.BaseStrategy import BaseStrategy
 import backtrader as bt
 
 class SMAStrategy(BaseStrategy):
+    """
+    Simple Moving Average (SMA) Crossover Strategy
+    This strategy buys when the price crosses above the SMA and sells when it crosses below.
+
+    :param SMA_period: Period for the Simple Moving Average.
+    
+    """
 
     params = (('SMA_period', 10),)
 
@@ -24,12 +31,12 @@ class SMAStrategy(BaseStrategy):
             if self.orders[data] is not None:
                 continue
 
-            # BUY
+            
             if own == 0 and cross > 0:
                 self.log(f"BUY SIGNAL {data._name}")
                 self.orders[data] = self.buy(data=data)
 
-            # SELL
+            
             elif own > 0 and cross < 0:
                 self.log(f"SELL SIGNAL {data._name}")
                 self.orders[data] = self.sell(data=data)

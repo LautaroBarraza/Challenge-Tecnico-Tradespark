@@ -7,6 +7,12 @@ import src.config as config
 
 
 def generate_strategy_transaction_resume():
+    """
+    Generate a summary report and visualizations for strategy transactions.
+    This function reads transaction data from a CSV file, computes summary statistics
+    for each strategy, and generates visualizations to analyze strategy performance.
+    """
+
 
     data_transactions = pd.read_csv(config.OUTPUT_REPORTS_PATH + 'transaction_report.csv')
 
@@ -60,7 +66,7 @@ def generate_strategy_transaction_resume():
     plt.xticks(rotation=90)
     plt.savefig(config.OUTPUT_ANALYSIS_FIGURES_PATH + 'strategies_profit_distribution.png')
     plt.close()
-    
+
     plt.figure(figsize=(12, 6))
     plt.bar(resume_strat['strategy'], resume_strat['total_profit'])
     plt.xlabel('Strategy')

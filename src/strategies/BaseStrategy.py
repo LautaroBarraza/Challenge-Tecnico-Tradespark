@@ -2,6 +2,13 @@ import backtrader as bt
 
 class BaseStrategy(bt.Strategy):
 
+    """
+    Base Strategy Class
+    This class serves as a base for all trading strategies, providing common functionality
+    such as order management, trade logging, and portfolio tracking.
+    """
+
+
     def __init__(self):
 
         # Pending orders per data
@@ -126,4 +133,8 @@ class BaseStrategy(bt.Strategy):
         })
 
     def position(self, data):
+        """Get the current position size for a given data feed.
+        :param data: The data feed (stock).
+        :return: Current position size.
+        """
         return sum(lot['remaining'] for lot in self.ledger[data])

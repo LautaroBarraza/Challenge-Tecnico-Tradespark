@@ -4,13 +4,13 @@
 
 Algortmico que permite ejecutar estrategias basadas en medias móviles simples utilizando Backtrader, con administración separada de capital por estrategia.
 
-### Description
+### Descripcion
 Este proyecto es un entorno modular de backtesting para estrategias de trading algorítmico escrito en Python.
 Esta diseñado para probar estrategias tecnicas (como Cruce Dorado y Medias Móviles) sobre datos historicos de acciones tecnologicas (AAPL, GOOGL, MSFT, TSLA) en 2021, pero pueden ser modificables en archivo de configuracion.
 
-### Características
+### Caracteristicas
 
-📋 Características
+Características
 * Arquitectura Modular: Separación clara entre datos, estrategias, gestión de tamaño de posición (sizers) y ejecución.
 
 * Estrategias Implementadas:

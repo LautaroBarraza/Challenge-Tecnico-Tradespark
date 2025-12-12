@@ -51,7 +51,7 @@ if __name__ == '__main__':
         )
         cerebro.adddata(data, name=ticker)
 
-
+    ## Add strategies to Cerebro
     cerebro.addstrategy(SMAStrategy, SMA_period=10)
     cerebro.addstrategy(SMAStrategy, SMA_period=30)
     cerebro.addstrategy(GoldenCrossStrategy, SMA_short_period=10, SMA_long_period=30)
@@ -67,25 +67,25 @@ if __name__ == '__main__':
 
 
     ## final reports
-    # 1. REPORTE DE TRANSACCIONES
+    # 1. transaction report
     all_trades = []
     for strat in strategies:
-        # Extraemos la lista 'trade_history' de cada estrategia
+        # Extract the 'trade_history' list from each strategy
         all_trades.extend(strat.trade_history)
     
-    # Convertimos a DataFrame
+    # Create a DataFrame from the combined trade history to generate the report
     df_trades = pd.DataFrame(all_trades)
     
     if not df_trades.empty:
-        # Ordenar por fecha
+        # Sort by date
         df_trades.sort_values(by='date', inplace=True)
         
-        # Guardar a CSV
+        # Save to CSV
         df_trades.to_csv(config.OUTPUT_REPORTS_PATH + 'transaction_report.csv', index=False)
 
 
-    # 2. REPORTE DE VALOR DE PORTFOLIO (Variaciones)
-    # Tomamos la historia de valores de la primera estrategia (todas comparten el mismo broker)
+    # 2. portfolio value report (variations)
+    # take the value history of the first strategy (all share the same broker)
     portfolio_history = strategies[0].portfolio_values
     df_portfolio = pd.DataFrame(portfolio_history)
     df_portfolio.to_csv(config.OUTPUT_REPORTS_PATH + 'value_report_portfolio.csv', index=False)
@@ -94,6 +94,6 @@ if __name__ == '__main__':
     ## strategies resume
     strategy_transaction_resume.generate_strategy_transaction_resume()
 
-
+    ## Plot the results
     cerebro.plot()
 

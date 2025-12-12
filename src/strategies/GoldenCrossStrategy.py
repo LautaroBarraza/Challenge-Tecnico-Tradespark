@@ -3,6 +3,14 @@ import backtrader as bt
 
 class GoldenCrossStrategy(BaseStrategy):
 
+    """
+    Golden Cross Strategy
+    This strategy buys when the short-term SMA crosses above the long-term SMA (Golden Cross)
+    and sells when the short-term SMA crosses below the long-term SMA (Death Cross).
+    :param SMA_short_period: Period for the short-term Simple Moving Average.
+    :param SMA_long_period: Period for the long-term Simple Moving Average.
+    """
+
     params = (
         ('SMA_short_period', 10),
         ('SMA_long_period', 30)
@@ -10,7 +18,6 @@ class GoldenCrossStrategy(BaseStrategy):
 
     def __init__(self):
         super().__init__()
-
         self.crossovers = {}
         for d in self.datas:
             sma_s = bt.indicators.SimpleMovingAverage(d.close, period=self.params.SMA_short_period)
